@@ -584,15 +584,15 @@
     </div>
    </a>
 
-   <a href="https://www.chess.com/play/arena/31122166" target="_blank">
+   <a href="https://www.chess.com/play/arena/31122172" target="_blank">
     <div class="arena-card">
-     <div class="arena-card-img"><img src="https://images.chesscomfiles.com/chess-flair/chess/bullet.svg" width="50" height="50" /></div>
+     <div class="arena-card-img"><img src="https://images.chesscomfiles.com/chess-flair/chess/blitz.svg" width="50" height="50" /></div>
       <div class="arena-card-details">
        <div class="arena-card-name">CW Live 2026</div>
-       <div class="arena-card-stats">2+1 ⋅ Rated ⋅ 24 hrs</div>
+       <div class="arena-card-stats">3+2 ⋅ Rated ⋅ 24 hrs</div>
        <div class="arena-card-league-name">CW</div>
       </div>
-     <div class="arena-card-time" data-target="2026-10-18T03:00:00+11:00">00:00:00</div>
+     <div class="arena-card-time" data-target="2026-10-25T03:00:00+11:00">00:00:00</div>
      </div>
    </a>
   </div>
@@ -800,26 +800,31 @@
     setInterval(refreshAllMatches, REFRESH_INTERVAL_MS);
 
     function updateArenaCountdowns() {
-        const now = Date.now();
-        const DAY = 24 * 60 * 60 * 1000;
+    const now = Date.now();
+    const DURATION_24H_MS = 24 * 60 * 60 * 1000;
 
-        document.querySelectorAll(".arena-card-time[data-target]").forEach(timer => {
-            const target = new Date(timer.dataset.target).getTime();
+    document.querySelectorAll(".arena-card-time[data-target]").forEach(timer => {
+        const startTime = new Date(timer.dataset.target).getTime();
 
-            if (Number.isNaN(target)) {
-                timer.textContent = "Invalid date";
-                return;
-            }
+        if (Number.isNaN(startTime)) {
+            timer.textContent = "Invalid date";
+            return;
+        }
 
-            let remaining = target - now;
+        const endTime = startTime + DURATION_24H_MS;
 
-            if (remaining <= 0) {
-                remaining = DAY - ((now - target) % DAY);
-            }
+        if (now >= endTime) {
+            timer.textContent = "FINISHED";
+            timer.classList.remove("countdown-red");
+            timer.style.color = "var(--green)";
+            return;
+        }
 
-            timer.classList.toggle("countdown-red", target <= now);
+        if (now >= startTime) {
+            const timeRemainingInEvent = endTime - now;
+            timer.classList.add("countdown-red"); // Red indicator while active
 
-            const totalSeconds = Math.floor(remaining / 1000);
+            const totalSeconds = Math.floor(timeRemainingInEvent / 1000);
             const hours = Math.floor(totalSeconds / 3600);
             const minutes = Math.floor((totalSeconds % 3600) / 60);
             const seconds = totalSeconds % 60;
@@ -828,8 +833,24 @@
                 `${String(hours).padStart(2, "0")}:` +
                 `${String(minutes).padStart(2, "0")}:` +
                 `${String(seconds).padStart(2, "0")}`;
-        });
-    }
+            return;
+        }
+
+        const timeToStart = startTime - now;
+        timer.classList.remove("countdown-red");
+        timer.style.color = "var(--green)";
+
+        const totalSeconds = Math.floor(timeToStart / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        timer.textContent =
+            `${String(hours).padStart(2, "0")}:` +
+            `${String(minutes).padStart(2, "0")}:` +
+            `${String(seconds).padStart(2, "0")}`;
+    });
+}
 
     updateArenaCountdowns();
     setInterval(updateArenaCountdowns, 1000);
