@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="color-scheme" content="light dark">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TVO Sidebar Widget</title>
+    <title>Daily Matches List Creator</title>
 
     <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
 
@@ -48,11 +48,22 @@
 
         a {
          text-decoration: none;
-         color: inherit;
+         color: var(--gold);
+        }
+
+        a:hover {
+         filter: brightness(125%);
+        }
+
+        hr {
+         border: 0;
+         height: 1px;
+         background-color: rgba(255, 255, 255, 0.1);
+         margin: 15px 0;
         }
 
         html, body {
-         background: transparent !important;
+         background: var(--gradient-blue);
          background-color: transparent ;
          color-scheme: light dark;
          margin: 0;
@@ -61,9 +72,11 @@
         body {
          font-family: var(--font-main);
          margin: 0;
-         height: 100vh;
+         min-height: 100vh;
+         height: auto;
          display: flex;
-         overflow: hidden;
+         overflow-x: hidden;
+         overflow-y: auto;
          flex-direction: column;
          box-sizing: border-box;
          color: var(--text-white);
@@ -97,398 +110,183 @@
          background: transparent;
         }
 
-/* -------------------- DAILY -------------------- */
+/* -------------------- MAIN -------------------- */
      
-        .daily {
-         width: 244px;
-         height: 307px;
-         box-sizing: border-box;
+        .large-box {
+         padding: 20px;
+         width: 100%;
+         max-width: 750px;
+         background: var(--shade);
+         border: 1px solid var(--tint);
+         border-radius: 8px;
          display: grid;
-         grid-template-columns: repeat(3, 1fr);
-         gap: 10px;
+         grid-template-columns: repeat(2, minmax(0, 1fr));
+         gap: 12px;
+         box-sizing: border-box;
+         margin-top: 20px;
         }
 
-        .daily-hr {
-         font-size: 16px;
-         white-space: nowrap;
-         overflow: hidden;
-         text-overflow: ellipsis;
-         height: 34px;
-         align-items: center;
+        .large-box option {
+         background: rgba(0, 0, 0, 0.2);
+         color: #fff;
+        }
+
+        .header-text {
+         font-family: var(--font-main);
+         font-weight: 700;
+         font-size: 24px;
+         margin-bottom: 6px;
          display: flex;
-         width: fit-content;
+         height: 24px;
+         grid-column: span 2;
         }
 
-        .league-btn {
-         box-sizing: inherit;
-         font-family: inherit;
-         cursor: pointer;
+        .small-box {
+         background: var(--shade);
+         border: 1px solid var(--tint);
+         border-radius: 8px;
+         padding: 10px;
+         font-family: var(--font-second);
+         font-size: 15px;
+         color: var(--text-darker);
+         display: flex;
+         justify-content: space-between;
          align-items: center;
-         background: linear-gradient(#81b64c 0%, #5d9948 100%) 0% 0% / auto repeat scroll padding-box border-box rgba(0, 0, 0, 0);
-         border: 0px;
-         border-radius: 5px;
-         box-shadow: color(srgb 0.698039 0.878431 0.407843 / 0.4) 0px 1px 0px 0px inset, #45753c 0px -1px 0px 0px inset, color(srgb 0.698039 0.878431 0.407843 / 0.5) 0px 2px 4px 0px inset, color(srgb 0.270588 0.458824 0.235294 / 0.5) 0px -2px 4px 0px inset, rgba(0, 0, 0, 0.14) 0px 1px 2px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px;
-         color: #ffffff;
-         font-size: 14px;
-         font-weight: 600;
-         justify-content: center; 
-         line-height: 1.1428;
-         overflow: hidden;
-         padding: 4px 10px;
-         text-align: center;
-         text-shadow: rgba(0, 0, 0, 0.2) 0px 1px 0px;
-         touch-action: manipulation;
-         word-break: break-word;
-         height: 34px;
-         min-width: 66px;
-         scrollbar-color: rgba(0, 0, 0, 0.45) transparent;
-         scrollbar-width: thin;
+        }
+
+/* -------------------- INPUT -------------------- */
+     
+        .input {
+         background: var(--shade);
+         border: 1px solid var(--tint);
+         border-radius: 8px;
+         padding: 10px;
+         font-family: var(--font-second);
+         font-size: 15px;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+        }
+
+        .input:focus {
+         border: 1px solid var(--gold);
+         outline: none;
+        }
+
+        #timeInput {
+         color: var(--text-white);
+         cursor: pointer;
+        }
+
+        #timeInput option {
+         background-color: #0b132b;
+         color: var(--text-darker);
          font-family: var(--font-second);
         }
-
-        .league-btn:hover {
-         background: var(--gradient-green-light);
-        }
-
-        .friendly-btn {
-         box-sizing: inherit;
-         font-family: inherit;
-         cursor: pointer;
-         align-items: center;
-         background: linear-gradient(#81b64c 0%, #5d9948 100%) 0% 0% / auto repeat scroll padding-box border-box rgba(0, 0, 0, 0);
-         border: 0px;
-         border-radius: 5px;
-         box-shadow: color(srgb 0.698039 0.878431 0.407843 / 0.4) 0px 1px 0px 0px inset, #45753c 0px -1px 0px 0px inset, color(srgb 0.698039 0.878431 0.407843 / 0.5) 0px 2px 4px 0px inset, color(srgb 0.270588 0.458824 0.235294 / 0.5) 0px -2px 4px 0px inset, rgba(0, 0, 0, 0.14) 0px 1px 2px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px;
-         color: #ffffff;
-         column-gap: 8px;
-         font-size: 14px;
-         font-weight: 600;
-         justify-content: center; 
-         line-height: 1.1428;
-         overflow: hidden;
-         padding: 4px 10px;
-         text-align: center;
-         text-shadow: rgba(0, 0, 0, 0.2) 0px 1px 0px;
-         touch-action: manipulation;
-         word-break: break-word;
-         height: 34px;
-         min-width: 71px;
-         scrollbar-color: rgba(0, 0, 0, 0.45) transparent;
-         scrollbar-width: thin;
-         font-family: var(--font-second);
-        }
-
-        .friendly-btn:hover {
-         background: var(--gradient-green-light);
-        }
-
-        .league-btn:not(.active),
-        .friendly-btn:not(.active) {
-         background: var(--gradient-glass);
-         box-shadow: inset 0 .1rem 0 0 rgba(255, 255, 255, .08), 0 .1rem .2rem 0 rgba(0, 0, 0, .14), 0 .2rem .4rem 0 rgba(0, 0, 0, .1);
-        }
-
-        .league-btn:not(.active):hover,
-        .friendly-btn:not(.active):hover {
-         background: var(--gradient-glass-light);
-        }
-
-        .league-btn.active,
-        .friendly-btn.active {
+     
+        .button-enter {
          background: var(--gradient-green);
-         box-shadow: color(srgb 0.698039 0.878431 0.407843 / 0.4) 0px 1px 0px 0px inset, #45753c 0px -1px 0px 0px inset, color(srgb 0.698039 0.878431 0.407843 / 0.5) 0px 2px 4px 0px inset, color(srgb 0.270588 0.458824 0.235294 / 0.5) 0px -2px 4px 0px inset, rgba(0, 0, 0, 0.14) 0px 1px 2px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px;
+         font-family: var(--font-main);
+         border-radius: 0.5rem;
+         padding: 10px;
+         align-items: center;
+         justify-content: center;
+         display: flex;
+         cursor: pointer;
+         color: var(--text-white);
+         box-shadow: inset 0 .1rem 0 0 color-mix(in srgb, #B2E068, transparent 60%), inset 0 -.1rem 0 0 #45753C, inset 0 .2rem .4rem 0 color-mix(in srgb, #B2E068, transparent 50%), inset 0 -.2rem .4rem 0 color-mix(in srgb, #45753C, transparent 50%), 0 .1rem .2rem 0 rgba(0, 0, 0, .14), 0 .2rem .4rem 0 rgba(0, 0, 0, .1);
+         margin-top: 10px;
+         width: 100%;
+         border: 0px solid;
+         font-size: 15px;
+         text-shadow: 0 .1rem 0 rgba(0, 0, 0, .2);
+         grid-column: span 2;
         }
 
-        .league-btn.active:hover,
-        .friendly-btn.active:hover {
+        .button-enter:hover {
          background: var(--gradient-green-light);
         }
 
-        .daily-cards {
-         width: 100%;
-         height: 263px;
-         display: flex;
-         flex-direction: column;
-         gap: 5px;
-         grid-column: span 3;
-        }
+/* -------------------- LIST -------------------- */
 
-        .daily-card {
-         border: 1px solid var(--tint);
+        .list {
+         grid-column: span 2;
+         font-family: var(--font-second);
+         font-size: 15px;
+         color: var(--white);
          background: var(--shade);
-         width: 232px;
-         height: 50px;
-         border-radius: 10px;
-         backdrop-filter: blur(10px);
-         transition: 0.5s ease;
-         padding: 5px;
-         display: grid;
-         grid-template-columns: 50px minmax(0, 1fr);
-         grid-template-rows: repeat(3, 1fr);
-         gap: 5px;
-         cursor: pointer;
+         border: 1px solid var(--tint);
+         border-radius: 8px;
+         padding: 25px;
+         margin-top: 10px;
         }
 
-        .daily-card:hover {
-         border: 1px solid var(--gold);
-         transform: translateY(-2px);
-         color: var(--gold);
-        }
-
-        .daily-card-img img {
-         transition: 0.5s ease;
-        }
-     
-        .daily-card:hover .daily-card-img img {
-         filter: brightness(125%);
-        }
-
-        .daily-card-img {
-         grid-column: 1;
-         grid-row: 1;
-         height: 50px;
-         width: 50px;
-         border-radius: 10px;
-         grid-row: span 3;
-        }
-
-        .daily-card-details {
-         grid-row: span 3;
-         display: flex;
-         flex-direction: column;
-        }
-
-        .daily-card-name {
-         grid-column: 2;
-         grid-row: 1;
-         font-size: 14px;
-         transition: 0.5s ease;
-         white-space: nowrap;
-         overflow: hidden;
-         text-overflow: ellipsis;
-        }
-
-        .daily-card-league-name {
-         grid-column: 2;
-         grid-row: 2;
-         font-size: 12px;
-         font-family: var(--font-second);
+        .updated {
          color: var(--text-darker);
         }
 
-        .daily-card-stats {
-         grid-column: 2;
-         grid-row: 3;
-         font-size: 12px;
-         font-family: var(--font-second);
-         color: var(--text-darker);
+        .hr {
+         font-size: 18px;
+         font-weight: bold;
+         text-decoration: underline;
         }
 
-        .daily-card-alert {
-         position: fixed;
-         right: 5px;
-         bottom: 5px;
-         font-size: 10px;
-         color: rgba(255, 255, 255, 0.85);
+        .matches {
+         
         }
 
-        #date1,
-        #number1 {
-         transition: color 0.3s ease;
-        }
-
-        .status-green{
-         color: var(--green);
-        }
-     
-        .status-gold {
-         color: var(--gold);
-        }
-        
-        .status-red  {
+        .priority {
          color: var(--red);
         }
 
-        .daily-card-alert .status-message {
-         display: none;
-         color: var(--text-darker);
-        }
-     
-/* -------------------- ARENAS -------------------- */
-     
-        .arena {
-         width: 244px;
-         height: 173px;
-         box-sizing: border-box;
-         display: grid;
-         grid-template-columns: repeat(3, 1fr);
-         gap: 10px;
-         row-gap: 5px;
+        .match-heading-row {
+         display: inline;
+         font-weight: 400;
         }
 
-        .arena-hr {
-         font-size: 16px;
-         white-space: nowrap;
-         overflow: hidden;
-         text-overflow: ellipsis;
-         height: 34px;
+        #leagueMatches > p,
+        #friendlyMatches > p {
+         margin: 0 0 14px;
+         padding: 0;
+        }
+
+        #leagueMatches > p:last-child,
+        #friendlyMatches > p:last-child {
+         margin-bottom: 0;
+        }
+
+        .match-info-button {
+         display: inline-flex;
          align-items: center;
-         display: flex;
-         width: fit-content;
-        }
-
-        .ongoing-btn {
-         cursor: pointer;
-         width: 100%;
-         align-items: center;
-         background: linear-gradient(#81b64c 0%, #5d9948 100%) 0% 0% / auto repeat scroll padding-box border-box rgba(0, 0, 0, 0);
-         border: 0px;
-         border-radius: 5px;
-         box-shadow: color(srgb 0.698039 0.878431 0.407843 / 0.4) 0px 1px 0px 0px inset, #45753c 0px -1px 0px 0px inset, color(srgb 0.698039 0.878431 0.407843 / 0.5) 0px 2px 4px 0px inset, color(srgb 0.270588 0.458824 0.235294 / 0.5) 0px -2px 4px 0px inset, rgba(0, 0, 0, 0.14) 0px 1px 2px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px;
-         color: #ffffff;
-         font-size: 14px;
-         font-weight: 600;
-         justify-content: center; 
-         line-height: 1.1428;
-         overflow: hidden;
-         padding: 4px 10px;
-         text-align: center;
-         text-shadow: rgba(0, 0, 0, 0.2) 0px 1px 0px;
-         touch-action: manipulation;
-         word-break: break-word;
-         height: 34px;
-         min-width: 68px;
-         scrollbar-color: rgba(0, 0, 0, 0.45) transparent;
-         scrollbar-width: thin;
-         font-family: var(--font-second);
-        }
-
-        .ongoing-btn:hover {
-         background: var(--gradient-green-light);
-        }
-
-        .upcoming-btn {
-         cursor: pointer;
-         width: 100%;
-         align-items: center;
-         background: var(--gradient-glass);
-         border: 0px;
-         border-radius: 5px;
-         box-shadow: inset 0 .1rem 0 0 rgba(255, 255, 255, .08), 0 .1rem .2rem 0 rgba(0, 0, 0, .14), 0 .2rem .4rem 0 rgba(0, 0, 0, .1)
-         ;
-         color: #ffffff;
-         font-size: 14px;
-         font-weight: 600;
-         justify-content: center; 
-         line-height: 1.1428;
-         overflow: hidden;
-         padding: 4px 10px;
-         text-align: center;
-         text-shadow: rgba(0, 0, 0, 0.2) 0px 1px 0px;
-         touch-action: manipulation;
-         word-break: break-word;
-         height: 34px;
-         min-width: 86px;
-         scrollbar-color: rgba(0, 0, 0, 0.45) transparent;
-         scrollbar-width: thin;
-         font-family: var(--font-second);
-        }
-
-        .upcoming-btn:hover {
-         background: var(--gradient-glass-light);
-        }
-
-        .arena-cards {
-         width: 100%;
-         height: 131px;
-         display: flex;
-         flex-direction: column;
-         gap: 5px;
-         grid-column: span 3;
-        }
-
-        .arena-card {
-         border: 1px solid var(--tint);
-         background: var(--shade);
-         width: 232px;
-         height: 50px;
-         border-radius: 10px;
-         backdrop-filter: blur(10px);
-         transition: 0.5s ease;
-         padding: 5px;
-         display: grid;
-         grid-template-columns: 50px minmax(0, 1fr);
-         grid-template-rows: repeat(3, 1fr);
-         gap: 5px;
-         cursor: pointer;
-        }
-
-        .arena-card:hover {
-         border: 1px solid var(--gold);
-         transform: translateY(-2px);
+         justify-content: center;
+         width: 16px;
+         height: 16px;
+         padding: 0;
+         margin: 0 0 0 3px;
+         border: 0;
+         border-radius: 50%;
+         background: transparent;
          color: var(--gold);
+         cursor: pointer;
+         vertical-align: middle;
         }
 
-        .arena-card-img img {
-         transition: 0.5s ease;
-        }
-     
-        .arena-card:hover .arena-card-img img {
-         filter: brightness(125%);
-        }
-
-        .arena-card-img {
-         grid-column: 1;
-         grid-row: 1;
-         height: 50px;
-         width: 50px;
-         border-radius: 10px;
-         grid-row: span 3;
+        .match-info-button svg {
+         display: block;
+         width: 16px;
+         height: 16px;
+         fill: currentColor;
         }
 
-        .arena-card-details {
-         grid-row: span 3;
-         display: flex;
-         flex-direction: column;
+        .match-info-button:hover,
+        .match-info-button[aria-expanded="true"] {
+         background: var(--transparent-gold);
         }
 
-        .arena-card-name {
-         grid-column: 2;
-         grid-row: 1;
-         font-size: 14px;
-         transition: 0.5s ease;
-         white-space: nowrap;
-         overflow: hidden;
-         text-overflow: ellipsis;
-        }
-
-        .arena-card-league-name {
-         grid-column: 2;
-         grid-row: 2;
-         font-size: 12px;
-         font-family: var(--font-second);
-         color: var(--text-darker);
-        }
-
-        .arena-card-stats {
-         grid-column: 2;
-         grid-row: 3;
-         font-size: 12px;
-         font-family: var(--font-second);
-         color: var(--text-darker);
-        }
-
-        .arena-card-time {
-         position: fixed;
-         right: 5px;
-         bottom: 5px;
-         font-size: 10px;
-         color: var(--green);
-         font-variant-numeric: tabular-nums;
-        }
-
-        .arena-card-time.countdown-red {
-         color: var(--red);
+        .match-details[hidden] { display: none; }
+        .match-details:not([hidden]) { display: block; }
+        .match-link {
+         overflow-wrap: anywhere;
         }
      
 </style>
@@ -497,366 +295,377 @@
 
  <main class="main">
 
-  <div class="daily">
-   <div class="daily-hr"><img src="https://www.chess.com/bundles/web/images/color-icons/daily.svg" width="16" height="16" />&nbsp;Daily</div>
-   <button class="league-btn active">League</button>
-   <button class="friendly-btn">Friendly</button>
-   <div class="daily-cards">
-    
-    <a href="#" target="_blank" class="daily-card-link">
-     <div class="daily-card">
-      <div class="daily-card-img">
-       <img class="card-avatar" src="https://www.chess.com/bundles/web/images/user-image.svg" width="50" height="50" style="border-radius: 10px;" />
-      </div>
-       <div class="daily-card-details">
-       <div class="daily-card-name card-title">Loading...</div>
-       <div class="daily-card-stats card-stats">--</div>
-       <div class="daily-card-league-name card-league">--</div>
-      </div>
-      <div class="daily-card-alert"><span class="card-date">---</span> ⋅ <span class="card-needed">NEEDS --</span></div>
-     </div>
-    </a>
-    
-    <a href="#" target="_blank" class="daily-card-link">
-     <div class="daily-card">
-      <div class="daily-card-img">
-       <img class="card-avatar" src="https://www.chess.com/bundles/web/images/user-image.svg" width="50" height="50" style="border-radius: 10px;" />
-      </div>
-       <div class="daily-card-details">
-       <div class="daily-card-name card-title">Loading...</div>
-       <div class="daily-card-stats card-stats">--</div>
-       <div class="daily-card-league-name card-league">--</div>
-      </div>
-      <div class="daily-card-alert"><span class="card-date">---</span> ⋅ <span class="card-needed">NEEDS --</span></div>
-     </div>
-    </a>
-    
-    <a href="#" target="_blank" class="daily-card-link">
-     <div class="daily-card">
-      <div class="daily-card-img">
-       <img class="card-avatar" src="https://www.chess.com/bundles/web/images/user-image.svg" width="50" height="50" style="border-radius: 10px;" />
-      </div>
-       <div class="daily-card-details">
-       <div class="daily-card-name card-title">Loading...</div>
-       <div class="daily-card-stats card-stats">--</div>
-       <div class="daily-card-league-name card-league">--</div>
-      </div>
-      <div class="daily-card-alert"><span class="card-date">---</span> ⋅ <span class="card-needed">NEEDS --</span></div>
-     </div>
-    </a>
-    
-    <a href="#" target="_blank" class="daily-card-link">
-     <div class="daily-card">
-      <div class="daily-card-img">
-       <img class="card-avatar" src="https://www.chess.com/bundles/web/images/user-image.svg" width="50" height="50" style="border-radius: 10px;" />
-      </div>
-       <div class="daily-card-details">
-       <div class="daily-card-name card-title">Loading...</div>
-       <div class="daily-card-stats card-stats">--</div>
-       <div class="daily-card-league-name card-league">--</div>
-      </div>
-      <div class="daily-card-alert"><span class="card-date">---</span> ⋅ <span class="card-needed">NEEDS --</span></div>
-     </div>
-    </a>
-    
-   </div>
-  </div>
-
-  <div class="arena">
-   <div class="arena-hr"><img src="https://www.chess.com/bundles/web/images/color-icons/arena-club-multi.svg" width="16" height="16" />&nbsp;Arena</div>
-   <a href="https://www.chess.com/clubs/currentevents/the-vortex-order?type=multi-club-arena" target="_blank">
-    <button class="ongoing-btn">Current</button>
-   </a>
-   <a href="https://www.chess.com/clubs/upcomingevents/the-vortex-order?type=multi-club-arena" target="_blank">
-    <button class="upcoming-btn">Upcoming</button>
-   </a>
-
-   <a href="https://www.chess.com/play/arena/31130060" target="_blank">
-   <div class="arena-cards">
-    <div class="arena-card">
-     <div class="arena-card-img"><img src="https://images.chesscomfiles.com/chess-flair/chess/blitz.svg" width="50" height="50" /></div>
-     <div class="arena-card-details">
-       <div class="arena-card-name">Black Hole Blitz</div>
-       <div class="arena-card-stats">3+2 ⋅ Rated ⋅ 24 hrs</div>
-       <div class="arena-card-league-name">TVL</div>
-      </div>
-     <div class="arena-card-time" data-target="2026-10-25T11:00:00+11:00">00:00:00</div>
+   <div class="large-box">
+    <div class="header-text">
+     <img src="https://www.chess.com/bundles/web/images/color-icons/daily.svg" width="24" height="24" />&nbsp;Daily Matches List Creator
     </div>
-   </a>
-
-   <a href="https://www.chess.com/play/arena/31122172" target="_blank">
-    <div class="arena-card">
-     <div class="arena-card-img"><img src="https://images.chesscomfiles.com/chess-flair/chess/blitz.svg" width="50" height="50" /></div>
-      <div class="arena-card-details">
-       <div class="arena-card-name">CW Live 2026</div>
-       <div class="arena-card-stats">3+2 ⋅ Rated ⋅ 24 hrs</div>
-       <div class="arena-card-league-name">CW</div>
-      </div>
-     <div class="arena-card-time" data-target="2026-10-25T03:00:00+11:00">00:00:00</div>
-     </div>
-   </a>
-  </div>
-   
+    <input 
+        type="text" 
+        id="slugInput" 
+        class="input"
+        placeholder="Enter your club slug" 
+        required
+      />
+    <select
+        id="timeInput" 
+        class="input"
+        placeholder="Enter your club slug" 
+        required>
+     <option value="1wk">Next week</option>
+     <option value="2wk">Next 2 weeks</option>
+     <option value="3wk">Next 3 weeks</option>
+     <option value="1m">Next month</option>
+     <option value="all">All matches</option>
+    </select>
+    <button id="buttonEnter" class="button-enter"><svg data-glyph="layout-list-numbered" aria-hidden="true" height="15" width="15" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="white" d="m2 14.97v-1.23l1.97-1.5c1-.77 1.4-1.07 1.4-1.47 0-.43-.43-.73-1.07-.73-.93 0-1.63.93-1.63.93l-.77-.67s.8-1.27 2.37-1.27c1.17 0 2.1.67 2.1 1.7 0 .8-.57 1.37-1.5 2.07l-1.53 1.17h3.23v1zm2-8.54v-4.47l-1.7 1.17-.47-.87 2.57-1.7h.6v5.87zm.37 17.24c-1.63 0-2.57-1.07-2.57-1.07l.67-.77s.83.83 1.93.83c.8 0 1.27-.4 1.27-.9 0-.53-.47-.77-1.47-.77h-.8v-1h.8c1 0 1.33-.27 1.33-.8s-.43-.83-1.17-.83c-1.2 0-1.9.83-1.9.83l-.67-.77s.83-1.07 2.47-1.07c1.33 0 2.27.7 2.27 1.73 0 1.17-1.23 1.8-2.33 1.8v-.77c1.1 0 2.47.63 2.47 1.83 0 1-.97 1.7-2.3 1.7zm16.2-1.67h-9.13c-1.03 0-1.43-.4-1.43-1.43v-.13c0-1.03.4-1.43 1.43-1.43h9.13c1.03 0 1.43.4 1.43 1.43v.13c0 1.03-.4 1.43-1.43 1.43zm0-8.5h-9.13c-1.03 0-1.43-.4-1.43-1.43v-.13c0-1.03.4-1.43 1.43-1.43h9.13c1.03 0 1.43.4 1.43 1.43v.13c0 1.03-.4 1.43-1.43 1.43zm0-8.5h-9.13c-1.03 0-1.43-.4-1.43-1.43v-.13c0-1.03.4-1.43 1.43-1.43h9.13c1.03 0 1.43.4 1.43 1.43v.13c0 1.03-.4 1.43-1.43 1.43zm0 0"></path></svg>&nbsp;Create list</button>
+    <div class="list" style="display:none;">
+     <div class="updated">Last updated --/--/--</div>
+     <hr />
+     <div class="hr">League Matches</div>
+     <div id="leagueMatches"></div>
+     <hr />
+     <div class="hr">Friendly Matches</div>
+     <div id="friendlyMatches"></div>
+    </div>
+   </div>
 
  </main>
 
 
 <script>
 
-(() => {
-    "use strict";
+const leagueNames = [
+  'PCL', '1WL', 'TVL', 'CW', 'Club Wars', 'ᄃﾚひ乃 Wﾑ尺丂',
+  'KOTML', 'TMCL', 'TCMAC', 'LLCM', 'LaLEAGUE Chess Masters', 'WKCL'
+];
 
-    const MATCH_CONFIG = [
-        { id: "2010280", league: "TCMAC", totalNeeded: 50 },
-        { id: "2012012", league: "1WL",   totalNeeded: 25 },
-        { id: "2013034", league: "TCMAC", totalNeeded: 7 },
-        { id: "2013032", league: "TCMAC", totalNeeded: 25  }
-    ];
+const $ = (selector) => document.querySelector(selector);
+const listEl = document.querySelector('.list');
+const button = $('#buttonEnter');
+const leagueContainer = $('#leagueMatches');
+const friendlyContainer = $('#friendlyMatches');
+const updatedEl = document.querySelector('.updated');
 
-    const CLUB_SLUG = "the-vortex-order";
-    const REFRESH_INTERVAL_MS = 5 * 60 * 1000;
+const API = 'https://api.chess.com/pub';
+const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-    function setStatusColour(element, status) {
-        if (!element) return;
-        element.classList.remove("status-green", "status-gold", "status-red");
-        element.classList.add(`status-${status}`);
-    }
-
-    function isOurClub(team) {
-        const id = String(team?.["@id"] || team?.url || "").toLowerCase();
-        const name = String(team?.name || "").toLowerCase();
-        return id.includes(`/club/${CLUB_SLUG}`) ||
-               id.endsWith(`/${CLUB_SLUG}`) ||
-               name === "the vortex order";
-    }
-
-    async function fetchJson(url) {
-        const response = await fetch(url, {
-            headers: { "Accept": "application/json" },
-            cache: "no-store"
-        });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return response.json();
-    }
-
-    async function fetchOpponentAvatar(clubApiUrl) {
-        if (!clubApiUrl) return null;
-        try {
-            const clubData = await fetchJson(clubApiUrl);
-            return clubData.icon || clubData.avatar || null;
-        } catch {
-            return null;
-        }
-    }
-
-    function formatTimeSeconds(seconds) {
-        if (!seconds) return "3 d/m";
-        const days = Math.round(seconds / 86400);
-        return days > 0 ? `${days} d/m` : `${Math.round(seconds / 3600)} h/m`;
-    }
-
-    function formatRatingStats(settings) {
-        if (!settings) return "Open";
-        if (settings.min_rating && settings.max_rating) {
-            return `${settings.min_rating}-${settings.max_rating}`;
-        }
-        if (settings.max_rating) return `U${settings.max_rating}`;
-        if (settings.min_rating) return `+${settings.min_rating}`;
-        return "Open";
-    }
-
-    function formatVariant(variant) {
-        if (!variant || variant === "standard") return "Standard";
-        if (variant === "chess960") return "Chess960";
-        return variant.charAt(0).toUpperCase() + variant.slice(1);
-    }
-
-    async function processMatchCard(cardAnchor, config) {
-        if (!cardAnchor || !config) return;
-
-        const matchId = config.id;
-        const leagueName = config.league;
-        const totalNeeded = config.totalNeeded || 0;
-
-        cardAnchor.href = `https://www.chess.com/club/matches/${matchId}`;
-        cardAnchor.dataset.matchId = matchId;
-        cardAnchor.dataset.league = leagueName;
-        cardAnchor.dataset.totalNeeded = totalNeeded;
-
-        const avatarImg = cardAnchor.querySelector(".card-avatar");
-        const titleEl = cardAnchor.querySelector(".card-title");
-        const statsEl = cardAnchor.querySelector(".card-stats");
-        const leagueEl = cardAnchor.querySelector(".card-league");
-        const dateEl = cardAnchor.querySelector(".card-date");
-        const neededEl = cardAnchor.querySelector(".card-needed");
-
-        if (leagueEl) leagueEl.textContent = leagueName;
-
-        const endpoints = [
-            `https://api.chess.com/pub/match/${matchId}`,
-            `https://api.chess.com/pub/match/live/${matchId}`
-        ];
-
-        let matchData = null;
-        for (const endpoint of endpoints) {
-            try {
-                matchData = await fetchJson(endpoint);
-                if (matchData) break;
-            } catch (e) {
-            }
-        }
-
-        if (!matchData) {
-            if (titleEl) titleEl.textContent = "Error Loading";
-            return;
-        }
-
-        const teams = Object.values(matchData.teams || {});
-        const ourTeam = teams.find(isOurClub);
-        const oppTeam = teams.find(t => !isOurClub(t));
-
-        if (oppTeam) {
-            if (titleEl) titleEl.textContent = oppTeam.name || "Opponent";
-            const avatarUrl = await fetchOpponentAvatar(oppTeam["@id"]);
-            if (avatarUrl && avatarImg) avatarImg.src = avatarUrl;
-        }
-
-        const timeControl = formatTimeSeconds(matchData.settings?.time_class_per_move);
-        const ratingRange = formatRatingStats(matchData.settings);
-        const variant = formatVariant(matchData.settings?.rules);
-        if (statsEl) statsEl.textContent = `${timeControl} ⋅ ${ratingRange} ⋅ ${variant}`;
-
-        const startTime = matchData.start_time || matchData.start_date;
-        if (startTime && dateEl) {
-            const startDate = new Date(startTime * 1000);
-            const isoDate = startDate.toISOString().split("T")[0];
-            const monthStr = startDate.toLocaleString("en-US", { month: "short" }).toUpperCase();
-            const dayStr = String(startDate.getDate()).padStart(2, "0");
-
-            dateEl.textContent = `${monthStr} ${dayStr}`;
-            dateEl.dataset.date = isoDate;
-
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            const daysLeft = Math.round((startDate - today) / 86400000);
-
-            if (daysLeft >= 5) setStatusColour(dateEl, "green");
-            else if (daysLeft >= 3) setStatusColour(dateEl, "gold");
-            else setStatusColour(dateEl, "red");
-        }
-
-        if (ourTeam && neededEl) {
-            const currentPlayers = Array.isArray(ourTeam.players) ? ourTeam.players.length : 0;
-            const needed = Math.max(0, totalNeeded - currentPlayers);
-
-            neededEl.textContent = `NEEDS ${needed}`;
-            neededEl.dataset.currentNeeded = String(needed);
-
-            if (needed === 0) setStatusColour(neededEl, "green");
-            else if (needed < 10) setStatusColour(neededEl, "gold");
-            else setStatusColour(neededEl, "red");
-
-            neededEl.title = `${currentPlayers} of ${totalNeeded} players registered`;
-        }
-    }
-
-    function sortMatchCards() {
-        const container = document.querySelector(".daily-cards");
-        if (!container) return;
-
-        const links = Array.from(container.querySelectorAll(":scope > a"));
-
-        links.sort((a, b) => {
-            const dateA = a.querySelector("[data-date]");
-            const dateB = b.querySelector("[data-date]");
-            const dateValueA = dateA?.dataset.date || "9999-12-31";
-            const dateValueB = dateB?.dataset.date || "9999-12-31";
-
-            const dateComparison = dateValueA.localeCompare(dateValueB);
-            if (dateComparison !== 0) return dateComparison;
-
-            const neededA = Number(
-                a.querySelector(".card-needed")?.dataset.currentNeeded ?? Number.POSITIVE_INFINITY
-            );
-            const neededB = Number(
-                b.querySelector(".card-needed")?.dataset.currentNeeded ?? Number.POSITIVE_INFINITY
-            );
-            return neededA - neededB;
-        });
-
-        links.forEach(link => container.appendChild(link));
-    }
-
-    async function refreshAllMatches() {
-        const cardElements = Array.from(document.querySelectorAll(".daily-cards > a"));
-        const updatePromises = MATCH_CONFIG.map((config, index) => {
-            return processMatchCard(cardElements[index], config);
-        });
-        await Promise.all(updatePromises);
-        sortMatchCards();
-    }
-
-    refreshAllMatches();
-    setInterval(refreshAllMatches, REFRESH_INTERVAL_MS);
-
-    function updateArenaCountdowns() {
-    const now = Date.now();
-    const DURATION_24H_MS = 24 * 60 * 60 * 1000;
-
-    document.querySelectorAll(".arena-card-time[data-target]").forEach(timer => {
-        const startTime = new Date(timer.dataset.target).getTime();
-
-        if (Number.isNaN(startTime)) {
-            timer.textContent = "Invalid date";
-            return;
-        }
-
-        const endTime = startTime + DURATION_24H_MS;
-
-        if (now >= endTime) {
-            timer.textContent = "FINISHED";
-            timer.classList.remove("countdown-red");
-            timer.style.color = "var(--green)";
-            return;
-        }
-
-        if (now >= startTime) {
-            const timeRemainingInEvent = endTime - now;
-            timer.classList.add("countdown-red"); // Red indicator while active
-
-            const totalSeconds = Math.floor(timeRemainingInEvent / 1000);
-            const hours = Math.floor(totalSeconds / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = totalSeconds % 60;
-
-            timer.textContent =
-                `${String(hours).padStart(2, "0")}:` +
-                `${String(minutes).padStart(2, "0")}:` +
-                `${String(seconds).padStart(2, "0")}`;
-            return;
-        }
-
-        const timeToStart = startTime - now;
-        timer.classList.remove("countdown-red");
-        timer.style.color = "var(--green)";
-
-        const totalSeconds = Math.floor(timeToStart / 1000);
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-
-        timer.textContent =
-            `${String(hours).padStart(2, "0")}:` +
-            `${String(minutes).padStart(2, "0")}:` +
-            `${String(seconds).padStart(2, "0")}`;
-    });
+function slugFromInput(value) {
+  return value.trim()
+    .replace(/^https?:\/\/(www\.)?chess\.com\/club\//i, '')
+    .replace(/^\/+|\/+$/g, '')
+    .split(/[?#/]/)[0]
+    .toLowerCase();
 }
 
-    updateArenaCountdowns();
-    setInterval(updateArenaCountdowns, 1000);
- 
-})();
- 
+function apiUrlFromId(value) {
+  if (!value) return '';
+  if (value.startsWith('http')) return value;
+  return `${API}/${value.replace(/^\/+/, '')}`;
+}
+
+async function fetchJson(url) {
+  const response = await fetch(url, { headers: { Accept: 'application/json' } });
+  if (!response.ok) throw new Error(`Chess.com API returned ${response.status} for ${url}`);
+  return response.json();
+}
+
+function cleanClubName(value) {
+  if (!value) return 'opponent club';
+  return String(value).replace(/\/+$/, '').split('/').pop().replace(/-/g, ' ');
+}
+
+function getTeamClubUrl(team) {
+  return team?.['@id'] || team?.url || team?.club || '';
+}
+
+function teamMatchesSlug(team, slug) {
+  const url = getTeamClubUrl(team).toLowerCase().replace(/\/+$/, '');
+  return url.endsWith('/' + slug) || url.endsWith('/club/' + slug) || url.endsWith('/' + slug + '/');
+}
+
+function getPlayers(team) {
+  return Array.isArray(team?.players) ? team.players : [];
+}
+
+function playerRating(player) {
+  const rating = Number(player?.rating);
+  return Number.isFinite(rating) && rating > 0 ? rating : null;
+}
+
+function averageElo(players) {
+  const ratings = players.map(playerRating).filter(rating => rating !== null);
+  return {
+    average: ratings.length ? ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length : null,
+    ratedCount: ratings.length,
+    count: players.length,
+    sum: ratings.reduce((sum, rating) => sum + rating, 0)
+  };
+}
+
+function isLeagueMatch(name) {
+  const normalized = String(name || '').toLowerCase();
+  return leagueNames.some(league => normalized.includes(league.toLowerCase()));
+}
+
+function getMatchWebUrl(match, detail, matchId) {
+  return match.url || detail.url || `https://www.chess.com/club/matches/${matchId}`;
+}
+
+function matchIdFromMatch(match) {
+  const id = match['@id'] || match.url || '';
+  const matchPath = id.match(/\/(?:pub\/)?match\/(?:live\/)?([^/?#]+)/i);
+  if (matchPath) return matchPath[1];
+  const webPath = id.match(/\/club\/matches\/([^/?#]+)/i);
+  return webPath ? webPath[1] : '';
+}
+
+function eloRecruitmentRecommendation(homeElo, awayElo, margin, minimumPlayers = 0) {
+  if (homeElo.average === null || awayElo.average === null || homeElo.ratedCount === 0) {
+    return { count: 0, label: 'Elo range unavailable (player ratings missing)', target: null };
+  }
+  const target = awayElo.average + margin;
+  
+  const bands = [
+    { label: '800-1000', rating: 800 },
+    { label: '1000-1200', rating: 1000 },
+    { label: '1200-1400', rating: 1200 },
+    { label: '1400-1800+', rating: 1400 },
+    { label: '1800+', rating: 1800 },
+    { label: '2200+', rating: 2200 }
+  ];
+  for (const band of bands) {
+    for (let count = Math.max(1, minimumPlayers); count <= 250; count++) {
+      const projectedAverage = (homeElo.sum + count * band.rating) / (homeElo.ratedCount + count);
+      if (projectedAverage > target) {
+        return { count, label: `${count}x ${band.label} players`, target, assumedRating: band.rating, projectedAverage };
+      }
+    }
+  }
+  return { count: Math.max(1, minimumPlayers), label: `${Math.max(1, minimumPlayers)}x 2200+ players (estimate)`, target };
+}
+
+
+function getRatingRestriction(match, detail) {
+    const settings = detail?.settings || match?.settings || {};
+
+    const min = Number(settings.min_rating);
+    const max = Number(settings.max_rating);
+
+    const hasMin = Number.isFinite(min) && min > 0;
+    const hasMax = Number.isFinite(max) && max > 0;
+
+    if (hasMin && hasMax) {
+        return `${min}-${max}`;
+    }
+
+    if (hasMax) {
+        return `U${max}`;
+    }
+
+    if (hasMin) {
+        return `${min}+`;
+    }
+
+    return '';
+}
+
+
+function renderMatch(item, type) {
+  const { match, detail, matchId, opponentName, deficit, homePlayers, awayPlayers, homeElo, awayElo, eloDeficit, eloRecruitment, totalNeeded } = item;
+  const priorityLimit = type === 'league' ? 15 : 25;
+  const matchName = match.name || detail.name || 'Chess.com match';
+  const restriction = getRatingRestriction(match, detail);
+  const displayedNeed = deficit;
+  const playerLabel = `${displayedNeed}×${restriction ? ` ${restriction}` : ''} players`; 
+  const heading = type === 'league'
+    ? `${playerLabel} needed in ${matchName}`
+    : `${playerLabel} needed against ${opponentName}`;
+  const p = document.createElement('p');
+  if (displayedNeed > priorityLimit) p.classList.add('priority');
+  p.style.margin = '0 0 14px';
+
+  const headingRow = document.createElement('span');
+  headingRow.className = 'match-heading-row';
+  const title = document.createElement('span');
+  title.textContent = heading + (displayedNeed > priorityLimit ? '' : '');
+  title.style.fontWeight = '400';
+  headingRow.appendChild(title);
+
+  const infoButton = document.createElement('button');
+  infoButton.type = 'button';
+  infoButton.className = 'match-info-button';
+  infoButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16Zm-1-9h2v6h-2zm0-4h2v2h-2z"/></svg>';
+  infoButton.setAttribute('aria-label', 'Show calculation details');
+  infoButton.setAttribute('aria-expanded', 'false');
+  infoButton.title = 'Show calculation details';
+  headingRow.appendChild(infoButton);
+  p.appendChild(headingRow);
+
+  const info = document.createElement('span');
+  info.className = 'match-details';
+  info.hidden = true;
+  info.style.cssText = 'margin-top:7px;line-height:1.55;color:rgba(255,255,255,.72);font-size:13px;padding:10px;border:1px solid var(--tint);border-radius:6px;background:rgba(0,0,0,.12);box-sizing:border-box;';
+  const eloText = (elo) => elo.average === null
+    ? `unavailable (${elo.ratedCount}/${elo.count} rated players)`
+    : `${Math.round(elo.average)} average (${elo.ratedCount}/${elo.count} rated players)`;
+  const targetRatio = item.league ? 1.15 : 1.05;
+  const requiredPlayers = Math.ceil(awayPlayers.length * targetRatio);
+  const advantage = item.league ? '15%' : '5%';
+  info.textContent = `Calculation details: your club has ${homePlayers.length} players; the opponent has ${awayPlayers.length}. Player advantage: ceil(${awayPlayers.length} × ${targetRatio}) = ${requiredPlayers} players (${advantage} advantage); player deficit = ${deficit}. Average Elo (informational only) — your club: ${eloText(homeElo)}; opponent: ${eloText(awayElo)}. Matches are included and player needs are calculated using player count only.`;
+  infoButton.addEventListener('click', () => {
+    const opening = info.hidden;
+    info.hidden = !opening;
+    infoButton.setAttribute('aria-expanded', String(opening));
+    infoButton.title = opening ? 'Hide calculation details' : 'Show calculation details';
+    infoButton.setAttribute('aria-label', infoButton.title);
+  });
+  p.appendChild(info);
+
+  const a = document.createElement('a');
+  a.className = 'match-link';
+  a.href = getMatchWebUrl(match, detail, matchId);
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
+  a.textContent = a.href;
+  p.appendChild(document.createElement('br'));
+  p.appendChild(a);
+  return p;
+}
+
+async function inspectMatch(match, slug) {
+  const matchId = matchIdFromMatch(match);
+  if (!matchId) return null;
+  const detailUrl = match['@id']?.includes('/pub/match/')
+    ? match['@id']
+    : `${API}/match/${matchId}`;
+  const detail = await fetchJson(detailUrl);
+  const teams = detail.teams || {};
+  const teamEntries = Object.entries(teams).filter(([, team]) => team && typeof team === 'object');
+  let homeEntry = teamEntries.find(([, team]) => teamMatchesSlug(team, slug));
+  if (!homeEntry) {
+    homeEntry = teamEntries.find(([, team]) => getPlayers(team).length) || teamEntries[0];
+  }
+  if (!homeEntry) return null;
+  const awayEntry = teamEntries.find(([key]) => key !== homeEntry[0]);
+  if (!awayEntry) return null;
+
+  const homePlayers = getPlayers(homeEntry[1]);
+  const awayPlayers = getPlayers(awayEntry[1]);
+  const homeElo = averageElo(homePlayers);
+  const awayElo = averageElo(awayPlayers);
+
+  const league = isLeagueMatch(match.name || detail.name);
+  const targetRatio = league ? 1.15 : 1.05;
+  const targetPlayers = Math.ceil(awayPlayers.length * targetRatio);
+  const deficit = Math.max(0, targetPlayers - homePlayers.length);
+  const eloDeficit = false;
+  const eloRecruitment = { count: 0, label: 'Elo is informational only' };
+  const totalNeeded = deficit;
+  if (deficit <= 0) return null;
+
+  const opponentUrl = getTeamClubUrl(awayEntry[1]) || match.opponent || '';
+  let opponentName = awayEntry[1].name || cleanClubName(opponentUrl);
+  if (!awayEntry[1].name && opponentUrl) {
+    try {
+      const club = await fetchJson(opponentUrl.startsWith('http') ? opponentUrl : apiUrlFromId(opponentUrl));
+      opponentName = club.name || opponentName;
+    } catch (_) {}
+  }
+
+  return { match, detail, matchId, opponentName, deficit, homePlayers, awayPlayers, homeElo, awayElo, league, eloDeficit, eloRecruitment, totalNeeded };
+}
+
+function getStartTime(match) {
+  const n = Number(match.start_time);
+  return Number.isFinite(n) && n > 0 ? n * 1000 : null;
+}
+
+function withinSelectedWindow(match, choice) {
+  if (choice === 'all') return true;
+  const start = getStartTime(match);
+  if (!start) return false;
+  const windows = { '1wk': 7, '2wk': 14, '3wk': 21, '1m': 31 };
+  return start >= Date.now() && start <= Date.now() + windows[choice] * 86400000;
+}
+
+async function createList() {
+  const slug = slugFromInput($('#slugInput').value);
+  if (!slug) {
+    alert('Please enter a Chess.com club slug.');
+    return;
+  }
+
+  button.disabled = true;
+  button.style.opacity = '.7';
+  button.textContent = 'Searching matches...';
+  listEl.style.display = 'block';
+  leagueContainer.replaceChildren();
+  friendlyContainer.replaceChildren();
+  updatedEl.textContent = 'Loading upcoming matches from Chess.com…';
+
+  try {
+    const data = await fetchJson(`${API}/club/${encodeURIComponent(slug)}/matches`);
+    const registered = Array.isArray(data.registered) ? data.registered : [];
+    const matches = registered.filter(match => withinSelectedWindow(match, $('#timeInput').value));
+
+    if (!matches.length) {
+      updatedEl.textContent = `Last updated ${new Date().toLocaleDateString()}`;
+      return;
+    }
+
+    const results = [];
+    const errors = [];
+    for (const match of matches) {
+      try {
+        const result = await inspectMatch(match, slug);
+        if (result) results.push(result);
+      } catch (error) {
+        errors.push(`${match.name || match['@id'] || 'A match'}: ${error.message}`);
+      }
+      await wait(120);
+    }
+
+    const leagues = results.filter(item => item.league).sort((a, b) => b.totalNeeded - a.totalNeeded);
+    const friendlies = results.filter(item => !item.league).sort((a, b) => b.totalNeeded - a.totalNeeded);
+
+    leagues.forEach((item, index) => {
+      const matchEl = renderMatch(item, 'league');
+      leagueContainer.appendChild(matchEl);
+    });
+    friendlies.forEach((item, index) => {
+      const matchEl = renderMatch(item, 'friendly');
+      friendlyContainer.appendChild(matchEl);
+    });
+
+    if (!leagues.length) leagueContainer.textContent = 'No league matches currently have a player deficit.';
+    if (!friendlies.length) friendlyContainer.textContent = 'No friendly matches currently have a player deficit.';
+
+    updatedEl.textContent = `Last updated ${new Date().toLocaleDateString()}`;
+    if (errors.length) {
+      const note = document.createElement('p');
+      note.style.cssText = 'color:rgba(255,255,255,.65);font-size:12px;';
+      note.textContent = `${errors.length} match(es) could not be checked. This can happen when Chess.com does not expose registered-match player lists or ratings yet.`;
+      listEl.appendChild(note);
+      console.warn('Chess.com match lookup errors:', errors);
+    }
+  } catch (error) {
+    updatedEl.textContent = `Could not load club matches: ${error.message}. Check the slug and try again.`;
+  } finally {
+    button.disabled = false;
+    button.style.opacity = '';
+    button.innerHTML = '<svg data-glyph="layout-list-numbered" aria-hidden="true" height="15" width="15" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="white" d="m2 14.97v-1.23l1.97-1.5c1-.77 1.4-1.07 1.4-1.47 0-.43-.43-.73-1.07-.73-.93 0-1.63.93-1.63.93l-.77-.67s.8-1.27 2.37-1.27c1.17 0 2.1.67 2.1 1.7 0 .8-.57 1.37-1.5 2.07l-1.53 1.17h3.23v1zm2-8.54v-4.47l-1.7 1.17-.47-.87 2.57-1.7h.6v5.87zm.37 17.24c-1.63 0-2.57-1.07-2.57-1.07l.67-.77s.83.83 1.93.83c.8 0 1.27-.4 1.27-.9 0-.53-.47-.77-1.47-.77h-.8v-1h.8c1 0 1.33-.27 1.33-.8s-.43-.83-1.17-.83c-1.2 0-1.9.83-1.9.83l-.67-.77s.83-1.07 2.47-1.07c1.33 0 2.27.7 2.27 1.73 0 1.17-1.23 1.8-2.33 1.8v-.77c1.1 0 2.47.63 2.47 1.83 0 1-.97 1.7-2.3 1.7zm16.2-1.67h-9.13c-1.03 0-1.43-.4-1.43-1.43v-.13c0-1.03.4-1.43 1.43-1.43h9.13c1.03 0 1.43-.4 1.43 1.43v.13c0 1.03-.4 1.43-1.43 1.43zm0-8.5h-9.13c-1.03 0-1.43-.4-1.43-1.43v-.13c0-1.03.4-1.43 1.43-1.43h9.13c1.03 0 1.43 1.43-1.43 1.43zm0-8.5h-9.13c-1.03 0-1.43-.4-1.43-1.43v-.13c0-1.03.4-1.43 1.43-1.43h9.13c1.03 0 1.43 1.43-1.43 1.43zm0 0"></path></svg>&nbsp;Create list';
+  }
+}
+
+button.addEventListener('click', createList);
+$('#slugInput').addEventListener('keydown', event => {
+  if (event.key === 'Enter') createList();
+});
+
+listEl.style.display = 'none';
+leagueContainer.replaceChildren();
+friendlyContainer.replaceChildren();
+
 </script> 
  
 </body>
