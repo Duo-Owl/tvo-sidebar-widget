@@ -571,30 +571,30 @@
     <button class="upcoming-btn">Upcoming</button>
    </a>
 
-   <a href="https://www.chess.com/play/arena/31193450" target="_blank">
    <div class="arena-cards">
-    <div class="arena-card">
-     <div class="arena-card-img"><img src="https://images.chesscomfiles.com/chess-flair/chess/blitz.svg" width="50" height="50" /></div>
-     <div class="arena-card-details">
-       <div class="arena-card-name">Black Hole Blitz</div>
-       <div class="arena-card-stats">3+2 ⋅ Rated ⋅ 24 hrs</div>
-       <div class="arena-card-league-name">TVL</div>
-      </div>
-     <div class="arena-card-time" data-target="2026-11-22T11:00:00+11:00">00:00:00</div>
-    </div>
-   </a>
-
-   <a href="https://www.chess.com/play/arena/31158558" target="_blank">
-    <div class="arena-card">
-     <div class="arena-card-img"><img src="https://images.chesscomfiles.com/chess-flair/chess/blitz.svg" width="50" height="50" /></div>
+    <a class="arena-card-link" href="#" target="_blank">
+     <div class="arena-card">
+      <div class="arena-card-img"><img src="https://images.chesscomfiles.com/chess-flair/chess/blitz.svg" width="50" height="50" /></div>
       <div class="arena-card-details">
-       <div class="arena-card-name">CW Live 2026</div>
-       <div class="arena-card-stats">3+2 ⋅ Rated ⋅ 24 hrs</div>
-       <div class="arena-card-league-name">CW</div>
+       <div class="arena-card-name">Loading...</div>
+       <div class="arena-card-stats">--</div>
+       <div class="arena-card-league-name">--</div>
       </div>
-     <div class="arena-card-time" data-target="2026-11-22T03:00:00+11:00">00:00:00</div>
+      <div class="arena-card-time" data-target="">--:--:--</div>
      </div>
-   </a>
+    </a>
+    <a class="arena-card-link" href="#" target="_blank">
+     <div class="arena-card">
+      <div class="arena-card-img"><img src="https://images.chesscomfiles.com/chess-flair/chess/blitz.svg" width="50" height="50" /></div>
+      <div class="arena-card-details">
+       <div class="arena-card-name">Loading...</div>
+       <div class="arena-card-stats">--</div>
+       <div class="arena-card-league-name">--</div>
+      </div>
+      <div class="arena-card-time" data-target="">--:--:--</div>
+     </div>
+    </a>
+   </div>
   </div>
    
 
@@ -602,26 +602,76 @@
 
 
 <script>
-
 (() => {
     "use strict";
-
+5001508
     const MATCH_CONFIG = [
-        { id: "2020208", league: "PCL", totalNeeded: 10 },
-        { id: "2020334", league: "1WL", totalNeeded: 31 },
-        { id: "5001508", league: "TCMAC", totalNeeded: 27 },
-        { id: "5001016", league: "TCMAC", totalNeeded: 10  }
+        { id: "5001508", league: "TCMAC", totalNeeded: 34 },
+        { id: "2020208", league: "PCL", totalNeeded: 12 },
+        { id: "5001318", league: "TCMAC", totalNeeded: 10 },
+        { id: "5001016", league: "TCMAC", totalNeeded: 10 },
+        { id: "5001018", league: "PCL", totalNeeded: 11 },
+        { id: "5002862", league: "PCL", totalNeeded: 15 }
     ];
 
     const FRIENDLY_MATCH_CONFIG = [
-    { id: "5001868", league: "Friendly", totalNeeded: 23 },
-    { id: "2018416", league: "Friendly", totalNeeded: 27 },
-    { id: "5001870", league: "Friendly", totalNeeded: 13 },
-    { id: "5001866", league: "Friendly", totalNeeded: 5 }
-];
+        { id: "5001868", league: "Friendly", totalNeeded: 27 },
+        { id: "5004098", league: "Friendly", totalNeeded: 20 },
+        { id: "5001908", league: "Friendly", totalNeeded: 4 },
+        { id: "5001870", league: "Friendly", totalNeeded: 15 },
+        { id: "", league: "Friendly", totalNeeded: 0 },
+        { id: "", league: "Friendly", totalNeeded: 0 }
+    ];
+ 
+    const ARENA_CONFIG = [
+        { id: "31200596",
+          name: "CVC Chess960 Unrated 1+0 MCA Arena",
+          league: "Friendly",
+          control: "1+0",
+          rated: "Unrated",
+          time: 1,
+          date: "2026-11-24T21:00:00+11:00",
+          image: "https://images.chesscomfiles.com/chess-flair/chess/bullet.svg" },
+     
+        { id: "31216496",
+          name: "1WL 10th Oceanian Capitals",
+          league: "1WL",
+          control: "5+2",
+          rated: "Rated",
+          time: 3,
+          date: "2026-11-28T14:00:00+11:00",
+          image: "https://images.chesscomfiles.com/chess-flair/chess/blitz.svg" },
+     
+        { id: "31155328",
+          name: "Blundering Buddies Bullet 1|0 Unrated MultiClub Arena",
+          league: "BB",
+          control: "1+0",
+          rated: "Unrated",
+          time: 24,
+          date: "2026-11-28T17:00:00+11:00",
+          image: "https://images.chesscomfiles.com/chess-flair/chess/bullet.svg" },
+     
+        { id: "",
+          name: "1WL 10th Autumn 24 hrs",
+          league: "1WL",
+          control: "5+2",
+          rated: "Rated",
+          time: 24,
+          date: "2026-11-28T19:00:00+11:00",
+          image: "https://images.chesscomfiles.com/chess-flair/chess/blitz.svg" }
+    ];
 
     const CLUB_SLUG = "the-vortex-order";
     const REFRESH_INTERVAL_MS = 5 * 60 * 1000;
+    const ROTATION_INTERVAL_MS = 1000;
+    const DEFAULT_AVATAR = "https://www.chess.com/bundles/web/images/user-image.svg";
+    const DEFAULT_ARENA_IMAGE = "https://images.chesscomfiles.com/chess-flair/chess/blitz.svg";
+
+    let currentMatchConfig = MATCH_CONFIG;
+    let currentMatchType = "league";
+    let loadedMatches = [];
+    let matchRequestToken = 0;
+    let lastArenaVisibleIds = "";
 
     function setStatusColour(element, status) {
         if (!element) return;
@@ -632,9 +682,7 @@
     function isOurClub(team) {
         const id = String(team?.["@id"] || team?.url || "").toLowerCase();
         const name = String(team?.name || "").toLowerCase();
-        return id.includes(`/club/${CLUB_SLUG}`) ||
-               id.endsWith(`/${CLUB_SLUG}`) ||
-               name === "the vortex order";
+        return id.includes(`/club/${CLUB_SLUG}`) || id.endsWith(`/${CLUB_SLUG}`) || name === "the vortex order";
     }
 
     async function fetchJson(url) {
@@ -656,6 +704,15 @@
         }
     }
 
+    function toTimestamp(value) {
+        if (value === null || value === undefined || value === "") return NaN;
+        if (typeof value === "number" || /^\d+$/.test(String(value))) {
+            const number = Number(value);
+            return number < 100000000000 ? number * 1000 : number;
+        }
+        return new Date(value).getTime();
+    }
+
     function formatTimeSeconds(seconds) {
         if (!seconds) return "3 d/m";
         const days = Math.round(seconds / 86400);
@@ -664,9 +721,7 @@
 
     function formatRatingStats(settings) {
         if (!settings) return "Open";
-        if (settings.min_rating && settings.max_rating) {
-            return `${settings.min_rating}-${settings.max_rating}`;
-        }
+        if (settings.min_rating && settings.max_rating) return `${settings.min_rating}-${settings.max_rating}`;
         if (settings.max_rating) return `U${settings.max_rating}`;
         if (settings.min_rating) return `+${settings.min_rating}`;
         return "Open";
@@ -678,222 +733,203 @@
         return variant.charAt(0).toUpperCase() + variant.slice(1);
     }
 
-    async function processMatchCard(cardAnchor, config) {
-        if (!cardAnchor || !config) return;
-
-        const matchId = config.id;
-        const leagueName = config.league;
-        const totalNeeded = config.totalNeeded || 0;
-
-        cardAnchor.href = `https://www.chess.com/club/matches/${matchId}`;
-        cardAnchor.dataset.matchId = matchId;
-        cardAnchor.dataset.league = leagueName;
-        cardAnchor.dataset.totalNeeded = totalNeeded;
-
-        const avatarImg = cardAnchor.querySelector(".card-avatar");
-        const titleEl = cardAnchor.querySelector(".card-title");
-        const statsEl = cardAnchor.querySelector(".card-stats");
-        const leagueEl = cardAnchor.querySelector(".card-league");
-        const dateEl = cardAnchor.querySelector(".card-date");
-        const neededEl = cardAnchor.querySelector(".card-needed");
-
-        if (leagueEl) leagueEl.textContent = leagueName;
-
-        const endpoints = [
-            `https://api.chess.com/pub/match/${matchId}`,
-            `https://api.chess.com/pub/match/live/${matchId}`
-        ];
+    async function loadMatch(config) {
+        const matchId = String(config.id || "").trim();
+        if (!matchId) return null;
 
         let matchData = null;
-        for (const endpoint of endpoints) {
+        for (const endpoint of [
+            `https://api.chess.com/pub/match/${encodeURIComponent(matchId)}`,
+            `https://api.chess.com/pub/match/live/${encodeURIComponent(matchId)}`
+        ]) {
             try {
                 matchData = await fetchJson(endpoint);
                 if (matchData) break;
-            } catch (e) {
+            } catch (error) {
             }
         }
+        if (!matchData) return null;
 
-        if (!matchData) {
-            if (titleEl) titleEl.textContent = "Error Loading";
-            return;
-        }
+        const startTime = toTimestamp(matchData.start_time ?? matchData.start_date);
+        if (!Number.isFinite(startTime)) return null;
 
         const teams = Object.values(matchData.teams || {});
         const ourTeam = teams.find(isOurClub);
-        const oppTeam = teams.find(t => !isOurClub(t));
+        const oppTeam = teams.find(team => !isOurClub(team));
+        const currentPlayers = Array.isArray(ourTeam?.players) ? ourTeam.players.length : 0;
+        const totalNeeded = Number(config.totalNeeded) || 0;
+        const settings = matchData.settings || {};
+        const avatar = await fetchOpponentAvatar(oppTeam?.["@id"]);
 
-        if (oppTeam) {
-            if (titleEl) titleEl.textContent = oppTeam.name || "Opponent";
-            const avatarUrl = await fetchOpponentAvatar(oppTeam["@id"]);
-            if (avatarUrl && avatarImg) avatarImg.src = avatarUrl;
+        return {
+            id: matchId,
+            league: config.league || "Match",
+            totalNeeded,
+            startTime,
+            opponent: oppTeam?.name || "Opponent",
+            avatar: avatar || DEFAULT_AVATAR,
+            currentPlayers,
+            needed: Math.max(0, totalNeeded - currentPlayers),
+            stats: `${formatTimeSeconds(settings.time_class_per_move)} ⋅ ${formatRatingStats(settings)} ⋅ ${formatVariant(settings.rules)}`
+        };
+    }
+
+    function renderMatchCard(anchor, match) {
+        const card = anchor.querySelector(".daily-card");
+        if (!match) {
+            anchor.style.display = "none";
+            anchor.removeAttribute("href");
+            return;
         }
 
-        const timeControl = formatTimeSeconds(matchData.settings?.time_class_per_move);
-        const ratingRange = formatRatingStats(matchData.settings);
-        const variant = formatVariant(matchData.settings?.rules);
-        if (statsEl) statsEl.textContent = `${timeControl} ⋅ ${ratingRange} ⋅ ${variant}`;
+        anchor.style.display = "block";
+        anchor.href = `https://www.chess.com/club/matches/${match.id}`;
+        anchor.dataset.matchId = match.id;
+        anchor.dataset.league = match.league;
 
-        const startTime = matchData.start_time || matchData.start_date;
-        if (startTime && dateEl) {
-            const startDate = new Date(startTime * 1000);
-            const isoDate = startDate.toISOString().split("T")[0];
-            const monthStr = startDate.toLocaleString("en-US", { month: "short" }).toUpperCase();
-            const dayStr = String(startDate.getDate()).padStart(2, "0");
+        const avatar = anchor.querySelector(".card-avatar");
+        const title = anchor.querySelector(".card-title");
+        const stats = anchor.querySelector(".card-stats");
+        const league = anchor.querySelector(".card-league");
+        const date = anchor.querySelector(".card-date");
+        const needed = anchor.querySelector(".card-needed");
 
-            dateEl.textContent = `${monthStr} ${dayStr}`;
-            dateEl.dataset.date = isoDate;
+        if (avatar) avatar.src = match.avatar;
+        if (title) title.textContent = match.opponent;
+        if (stats) stats.textContent = match.stats;
+        if (league) league.textContent = match.league;
 
+        if (date) {
+            const startDate = new Date(match.startTime);
+            date.textContent = `${startDate.toLocaleString("en-US", { month: "short" }).toUpperCase()} ${String(startDate.getDate()).padStart(2, "0")}`;
+            date.dataset.date = new Date(match.startTime).toISOString();
             const today = new Date();
             today.setHours(0, 0, 0, 0);
-            const daysLeft = Math.round((startDate - today) / 86400000);
-
-            if (daysLeft >= 5) setStatusColour(dateEl, "green");
-            else if (daysLeft >= 3) setStatusColour(dateEl, "gold");
-            else setStatusColour(dateEl, "red");
+            const daysLeft = Math.ceil((match.startTime - today.getTime()) / 86400000);
+            setStatusColour(date, daysLeft >= 5 ? "green" : daysLeft >= 3 ? "gold" : "red");
         }
 
-        if (ourTeam && neededEl) {
-            const currentPlayers = Array.isArray(ourTeam.players) ? ourTeam.players.length : 0;
-            const needed = Math.max(0, totalNeeded - currentPlayers);
-
-            neededEl.textContent = `NEEDS ${needed}`;
-            neededEl.dataset.currentNeeded = String(needed);
-
-            if (needed === 0) setStatusColour(neededEl, "green");
-            else if (needed < 10) setStatusColour(neededEl, "gold");
-            else setStatusColour(neededEl, "red");
-
-            neededEl.title = `${currentPlayers} of ${totalNeeded} players registered`;
+        if (needed) {
+            needed.textContent = `NEEDS ${match.needed}`;
+            needed.dataset.currentNeeded = String(match.needed);
+            needed.title = `${match.currentPlayers} of ${match.totalNeeded} players registered`;
+            setStatusColour(needed, match.needed === 0 ? "green" : match.needed < 10 ? "gold" : "red");
         }
+        if (card) card.setAttribute("aria-label", `${match.opponent}, ${match.league}`);
     }
 
-    function sortMatchCards() {
-        const container = document.querySelector(".daily-cards");
-        if (!container) return;
-
-        const links = Array.from(container.querySelectorAll(":scope > a"));
-
-        links.sort((a, b) => {
-            const dateA = a.querySelector("[data-date]");
-            const dateB = b.querySelector("[data-date]");
-            const dateValueA = dateA?.dataset.date || "9999-12-31";
-            const dateValueB = dateB?.dataset.date || "9999-12-31";
-
-            const dateComparison = dateValueA.localeCompare(dateValueB);
-            if (dateComparison !== 0) return dateComparison;
-
-            const neededA = Number(
-                a.querySelector(".card-needed")?.dataset.currentNeeded ?? Number.POSITIVE_INFINITY
-            );
-            const neededB = Number(
-                b.querySelector(".card-needed")?.dataset.currentNeeded ?? Number.POSITIVE_INFINITY
-            );
-            return neededA - neededB;
-        });
-
-        links.forEach(link => container.appendChild(link));
+    function assignUpcomingMatches() {
+        const now = Date.now();
+        const upcoming = loadedMatches
+            .filter(match => match && Number.isFinite(match.startTime) && match.startTime > now)
+            .sort((a, b) => a.startTime - b.startTime || a.needed - b.needed);
+        const slots = Array.from(document.querySelectorAll(".daily-cards > .daily-card-link"));
+        slots.forEach((slot, index) => renderMatchCard(slot, upcoming[index] || null));
     }
 
-    let currentMatchConfig = MATCH_CONFIG;
+    async function refreshAllMatches() {
+        const token = ++matchRequestToken;
+        const configSnapshot = currentMatchConfig;
+        const results = await Promise.all(configSnapshot.map(loadMatch));
+        if (token !== matchRequestToken) return;
+        loadedMatches = results.filter(Boolean);
+        assignUpcomingMatches();
+    }
 
-async function refreshAllMatches() {
-    const cardElements = Array.from(
-        document.querySelectorAll(".daily-cards > a")
-    );
+    const leagueButton = document.querySelector(".league-btn");
+    const friendlyButton = document.querySelector(".friendly-btn");
 
-    const updatePromises = currentMatchConfig.map((config, index) => {
-        return processMatchCard(cardElements[index], config);
-    });
+    function selectMatchType(type) {
+        currentMatchType = type;
+        currentMatchConfig = type === "friendly" ? FRIENDLY_MATCH_CONFIG : MATCH_CONFIG;
+        leagueButton?.classList.toggle("active", type === "league");
+        friendlyButton?.classList.toggle("active", type === "friendly");
+        loadedMatches = [];
+        assignUpcomingMatches();
+        refreshAllMatches();
+    }
 
-    await Promise.all(updatePromises);
-    sortMatchCards();
-}
+    leagueButton?.addEventListener("click", () => selectMatchType("league"));
+    friendlyButton?.addEventListener("click", () => selectMatchType("friendly"));
 
- const leagueButton = document.querySelector(".league-btn");
-const friendlyButton = document.querySelector(".friendly-btn");
+    function getUpcomingArenas() {
+        return ARENA_CONFIG
+            .map(config => ({ ...config, startTime: toTimestamp(config.date) }))
+            .filter(arena => arena.id && arena.name && Number.isFinite(arena.startTime) && arena.startTime > Date.now())
+            .sort((a, b) => a.startTime - b.startTime);
+    }
 
-function selectMatchType(type) {
-    const isFriendly = type === "friendly";
-
-    currentMatchConfig = isFriendly
-        ? FRIENDLY_MATCH_CONFIG
-        : MATCH_CONFIG;
-
-    leagueButton.classList.toggle("active", !isFriendly);
-    friendlyButton.classList.toggle("active", isFriendly);
-
-    refreshAllMatches();
-}
-
-leagueButton.addEventListener("click", () => {
-    selectMatchType("league");
-});
-
-friendlyButton.addEventListener("click", () => {
-    selectMatchType("friendly");
-});
-
-    refreshAllMatches();
-    setInterval(refreshAllMatches, REFRESH_INTERVAL_MS);
-
-    function updateArenaCountdowns() {
-    const now = Date.now();
-    const DURATION_24H_MS = 24 * 60 * 60 * 1000;
-
-    document.querySelectorAll(".arena-card-time[data-target]").forEach(timer => {
-        const startTime = new Date(timer.dataset.target).getTime();
-
-        if (Number.isNaN(startTime)) {
-            timer.textContent = "Invalid date";
-            return;
-        }
-
-        const endTime = startTime + DURATION_24H_MS;
-
-        if (now >= endTime) {
-            timer.textContent = "FINISHED";
-            timer.classList.remove("countdown-red");
-            timer.style.color = "var(--green)";
-            return;
-        }
-
-        if (now >= startTime) {
-            const timeRemainingInEvent = endTime - now;
-            timer.classList.add("countdown-red"); // Red indicator while active
-
-            const totalSeconds = Math.floor(timeRemainingInEvent / 1000);
-            const hours = Math.floor(totalSeconds / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = totalSeconds % 60;
-
-            timer.textContent =
-                `${String(hours).padStart(2, "0")}:` +
-                `${String(minutes).padStart(2, "0")}:` +
-                `${String(seconds).padStart(2, "0")}`;
-            return;
-        }
-
-        const timeToStart = startTime - now;
-        timer.classList.remove("countdown-red");
-        timer.style.color = "var(--green)";
-
-        const totalSeconds = Math.floor(timeToStart / 1000);
-        const hours = Math.floor(totalSeconds / 3600);
+    function formatCountdown(milliseconds) {
+        const totalSeconds = Math.max(0, Math.floor(milliseconds / 1000));
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
         const minutes = Math.floor((totalSeconds % 3600) / 60);
         const seconds = totalSeconds % 60;
+        return days > 0
+            ? `${days}d ${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`
+            : `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    }
 
-        timer.textContent =
-            `${String(hours).padStart(2, "0")}:` +
-            `${String(minutes).padStart(2, "0")}:` +
-            `${String(seconds).padStart(2, "0")}`;
-    });
-}
+    function renderArenaCards(force = false) {
+        const upcoming = getUpcomingArenas();
+        const visible = upcoming.slice(0, 2);
+        const visibleIds = visible.map(arena => arena.id).join("|");
+        if (!force && visibleIds === lastArenaVisibleIds) return;
+        lastArenaVisibleIds = visibleIds;
 
+        const slots = Array.from(document.querySelectorAll(".arena-cards > .arena-card-link"));
+        slots.forEach((anchor, index) => {
+            const arena = visible[index];
+            const card = anchor.querySelector(".arena-card");
+            if (!arena) {
+                anchor.style.display = "none";
+                anchor.removeAttribute("href");
+                return;
+            }
+            anchor.style.display = "block";
+            anchor.href = `https://www.chess.com/play/arena/${encodeURIComponent(arena.id)}`;
+            anchor.dataset.arenaId = arena.id;
+            const image = anchor.querySelector(".arena-card-img img");
+            const name = anchor.querySelector(".arena-card-name");
+            const stats = anchor.querySelector(".arena-card-stats");
+            const league = anchor.querySelector(".arena-card-league-name");
+            const timer = anchor.querySelector(".arena-card-time");
+            if (image) image.src = arena.image || DEFAULT_ARENA_IMAGE;
+            if (name) name.textContent = arena.name;
+            if (stats) stats.textContent = `${arena.control || "3+2"} ⋅ ${arena.rated || "Rated"} ⋅ ${arena.time || 24} hrs`;
+            if (league) league.textContent = arena.league || "Arena";
+            if (timer) {
+                timer.dataset.target = new Date(arena.startTime).toISOString();
+                timer.classList.remove("countdown-red");
+                timer.style.color = "var(--green)";
+                timer.textContent = formatCountdown(arena.startTime - Date.now());
+            }
+            if (card) card.setAttribute("aria-label", `${arena.name}, ${arena.league}`);
+        });
+    }
+
+    function updateArenaCountdowns() {
+
+        renderArenaCards();
+        const now = Date.now();
+        document.querySelectorAll(".arena-card-time[data-target]").forEach(timer => {
+            const startTime = toTimestamp(timer.dataset.target);
+            if (!Number.isFinite(startTime) || now >= startTime) return;
+            timer.textContent = formatCountdown(startTime - now);
+            timer.classList.remove("countdown-red");
+            timer.style.color = "var(--green)";
+        });
+    }
+
+    refreshAllMatches();
+    renderArenaCards(true);
     updateArenaCountdowns();
-    setInterval(updateArenaCountdowns, 1000);
- 
+    setInterval(refreshAllMatches, REFRESH_INTERVAL_MS);
+    setInterval(() => {
+        assignUpcomingMatches();
+        updateArenaCountdowns();
+    }, ROTATION_INTERVAL_MS);
 })();
- 
 </script> 
  
 </body>
